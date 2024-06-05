@@ -8,6 +8,7 @@
       <h1>
         Planificador de Gastos
       </h1>
+      <c_presupuesto/>
     </header>
   </div>
 </template>
