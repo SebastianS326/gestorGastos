@@ -1,4 +1,5 @@
 <script setup>
+  import c_presupuesto from './components/control_presupuesto.vue';
 </script>
 
 <template>
