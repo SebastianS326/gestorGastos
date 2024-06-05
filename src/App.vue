@@ -1,26 +1,69 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+<script setup>
+  import g_presupuesto from './components/Gestion_presupuesto.vue';
 </script>
 
+<template>
+  <div>
+
+    <header>
+      <h1>
+        Planificador de Gastos
+      </h1>
+      <g_presupuesto/>
+      
+    </header>
+  </div>
+</template>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  /*Estilos Globales de la App*/
+  :root {
+  --GrisAzul-50: #f6f7f9;
+  --GrisAzul-100: #ededf1;
+  --GrisAzul-200: #d6d8e1;
+  --GrisAzul-300: #b2b6c7;
+  --GrisAzul-400: #888ea8;
+  --GrisAzul-500: #69708e;
+  --GrisAzul-600: #545a75;
+  --GrisAzul-700: #474b62;
+  --GrisAzul-800: #3c3f50;
+  --GrisAzul-900: #353745;
+  --GrisAzul-950: #23252e;
+  }
+
+  html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    font-size: 1.6rem;
+    font-family: "lato", sans-serif;
+    background-color: var(--GrisAzul-200);
+  }
+
+  header {
+    background-color: var(--GrisAzul-600);
+  }
+
+  header h1 {
+    padding: 3rem 0;
+    margin: 0;
+    color: var(--GrisAzul-50);
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 4rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
 </style>
