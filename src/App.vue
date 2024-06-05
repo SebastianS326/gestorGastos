@@ -1,16 +1,12 @@
 <script setup>
-  import g_presupuesto from './components/Gestion_presupuesto.vue';
 </script>
 
 <template>
   <div>
-
     <header>
       <h1>
         Planificador de Gastos
       </h1>
-      <g_presupuesto/>
-      
     </header>
   </div>
 </template>
