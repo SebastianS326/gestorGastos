@@ -1,5 +1,11 @@
 <script setup>
+  import { ref } from 'vue'
   import c_presupuesto from './components/control_presupuesto.vue';
+
+  const presupuestoGeneral = ref(0)
+  const definirPresupuestoGeneral = (cantidad) => {
+    presupuestoGeneral.value = cantidad
+  }
 </script>
 
 <template>
@@ -10,7 +16,13 @@
       </h1>
 
       <section class="contenedor-header contenedor sombra">
-        <c_presupuesto/>
+
+        <c_presupuesto v-if="presupuestoGeneral === 0"
+          @definir-presupuesto="definirPresupuestoGeneral"
+        />
+
+        <p v-else>Valido</p>
+
       </section>
       
     </header>
