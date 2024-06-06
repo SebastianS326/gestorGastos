@@ -8,7 +8,11 @@
       <h1>
         Planificador de Gastos
       </h1>
-      <c_presupuesto/>
+
+      <section class="contenedor-header contenedor sombra">
+        <c_presupuesto/>
+      </section>
+      
     </header>
   </div>
 </template>
@@ -54,6 +58,23 @@
     margin: 0;
     color: var(--GrisAzul-50);
     text-align: center;
+  }
+
+  .contenedor {
+    width: 90%;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .contenedor-header {
+    margin-top: -5rem;
+    transform: translateY(5rem);
+    padding: 5rem;
+  }
+
+  .sombra {
+    box-shadow: 0px 0px 100px 100px rgba(0,0,0,0.1);
+    background-color: var(--GrisAzul-50);
   }
 
   h1 {
