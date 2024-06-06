@@ -1,16 +1,47 @@
 <script setup>
+    import { ref } from 'vue'
+    import global_error from './gobal_error.vue'
+
+    const presupuesto = ref(0)
+    const error = ref('')
+
+    const definirPresupuesto = () => {
+        if (presupuesto.value <= 0) {
+            error.value = 'El presupuesto debe ser mayor a 0'
+
+            setTimeout(() => {
+                error.value = ''
+            }, 3000)
+        }
+    }
 
 </script>
 
 
 <template>
-    <form class="presupuesto">
+    <form class="presupuesto" @submit.prevent="definirPresupuesto">
+
+        <global_error v-if="error">
+            {{ error }}
+        </global_error>
+
         <section class="campo">
+
             <label for="">Definir Presupuesto</label>
-            <input id="nuevo-presupuesto" class="nuevo-presupuesto"  type="number" placeholder="Agrega tu Presupuesto">
+
+            <input id="nuevo-presupuesto" 
+                class="nuevo-presupuesto"  
+                type="number"
+                min="0" 
+                placeholder="Agrega tu Presupuesto"
+                v-model.number="presupuesto"
+            />
+
         </section>
 
+        
         <input type="submit" value="Definir Presupuesto">
+
     </form>
 </template>
 
