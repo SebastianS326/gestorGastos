@@ -4,8 +4,12 @@
   import control_disponible from './components/control_disponible.vue'
 
   const presupuestoGeneral = ref(0)
+  const disponible = ref(0)
+
+
   const definirPresupuestoGeneral = (cantidad) => {
     presupuestoGeneral.value = cantidad
+    disponible.value = cantidad
   }
 </script>
 
@@ -24,6 +28,8 @@
 
         <control_disponible
           v-else
+          :presupuestoGeneral="presupuestoGeneral"
+          :disponible="disponible"
         />
 
       </section>
