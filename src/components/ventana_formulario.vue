@@ -1,14 +1,64 @@
 <script setup>
-    import { defineEmits } from 'vue'
+    import { defineEmits, defineProps } from 'vue'
     import iconoCerrar from '../assets/images/closeRed.svg'
 
     const emit = defineEmits(['cerrar-ventana'])
+    const props = defineProps({
+        nombre: {
+            type: String,
+            required: true
+        },
+        cantidad: {
+            type: [String, Number],
+            required: true
+        },
+        categoria: {
+            type: String,
+            required: true
+        }
+    })
+
+
 </script>
 
 <template>
     <section class="ventana-emergente">
         <div class="cerrar-Ventana">
             <img :src="iconoCerrar" @click="emit('cerrar-ventana')">
+        </div>
+
+        <div class="contenedor">
+            <form class="contenedor-formulario">
+
+                <legend>Agregar Gasto</legend>
+
+                <div class="Campo">
+                    <label for="Nombre">Nombre Gasto: </label>
+                    <input id="nombreGasto" type="text" placeholder="Agrega el nombre del gasto" :value="props.nombre">
+                </div>
+
+                <div class="Campo">
+                    <label for="cantidad">Monto del Gasto: </label>
+                    <input id="cantidadGasto" type="number" placeholder="Agrega el monto del gasto" :value="props.cantidad">
+                </div>
+
+                <div class="Campo">
+                    <label for="categoria">Categoria: </label>
+                    <select id="categoria" :value="props.categoria">
+                        <option value="">*** Seleccione ***</option>
+                        <option value="ahorro">Ahorro</option>
+                        <option value="comida">Comida</option>
+                        <option value="casa">Gastos de Casa</option>
+                        <option value="ocio">Ocio</option>
+                        <option value="salud">Salud</option>
+                        <option value="suscripciones">Suscripciones</option>
+                        <option value="otros">Gastos Varios</option>
+                    </select>
+                </div>
+
+                <input type="submit" value="Agregar">
+
+            </form>
         </div>
     </section>
 </template>
@@ -32,5 +82,42 @@
     .cerrar-Ventana img {
         width: 3rem;
         cursor: pointer;
+    }
+
+    .contenedor-formulario {
+        margin: 10rem auto 0 auto;
+        display: grid;
+        gap: 2rem;
+    }
+
+    .contenedor-formulario legend {
+        text-align: center;
+        color: var(--GrisAzul-50);
+        font-size: 4rem;
+        font-weight: 700;
+    }
+
+    .contenedor-formulario input, 
+    .contenedor-formulario select {
+        background-color: var(--GrisAzul-200);
+        border-radius: 1rem;
+        padding: 1rem;
+        border: none;
+    }
+
+    .contenedor-formulario label {
+        color: var(--GrisAzul-50)
+    }
+
+    .contenedor-formulario input[type="submit"] {
+        background-color: var(--GrisAzul-700);
+        color: var(--GrisAzul-50);
+        cursor: pointer;
+        font-weight: 700;
+    }
+
+    .Campo {
+        display: grid;
+        gap: 2rem;
     }
 </style>

@@ -15,6 +15,14 @@
     animar: false
   })
 
+  const gasto = reactive({
+    nombre: '',
+    cantidad: '',
+    categoria: '',
+    id: null,
+    fecha: Date.now()
+  })
+
   const mostarVentana = () => {
     ventana.mostrar = true
     ventana.animar = true
@@ -66,6 +74,9 @@
       <ventana_formulario 
         v-if="ventana.mostrar === true"
         @cerrar-ventana="cerrarVentana"
+        v-model:nombre="gasto.nombre"
+        v-model:cantidad="gasto.cantidad"
+        v-model:categoria="gasto.categoria"
       />
 
     </main>
