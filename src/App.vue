@@ -54,7 +54,7 @@
   <div>
     <header>
       <h1>
-        Planificador de Gastos
+        Planificador de Gastos Sebastian
       </h1>
 
       <section class="contenedor-header contenedor sombra">
