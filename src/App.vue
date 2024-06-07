@@ -9,6 +9,7 @@
 
   const presupuestoGeneral = ref(0)
   const disponible = ref(0)
+  const gastos = ref([])
 
   const ventana = reactive({
     mostrar: false,
@@ -38,6 +39,14 @@
     presupuestoGeneral.value = cantidad
     disponible.value = cantidad
   }
+
+  const guardarGasto = () => {
+    gastos.value.push({
+      id: 123,
+      ...gasto
+    })
+  }
+
 </script>
 
 <template>
@@ -74,6 +83,7 @@
       <ventana_formulario 
         v-if="ventana.mostrar === true"
         @cerrar-ventana="cerrarVentana"
+        @guardar-gasto="guardarGasto"
         v-model:nombre="gasto.nombre"
         v-model:cantidad="gasto.cantidad"
         v-model:categoria="gasto.categoria"
