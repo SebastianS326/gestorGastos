@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue'
-  import c_presupuesto from './components/control_presupuesto.vue';
+  import c_presupuesto from './components/control_presupuesto.vue'
+  import control_disponible from './components/control_disponible.vue'
 
   const presupuestoGeneral = ref(0)
   const definirPresupuestoGeneral = (cantidad) => {
@@ -21,7 +22,9 @@
           @definir-presupuesto="definirPresupuestoGeneral"
         />
 
-        <p v-else>Valido</p>
+        <control_disponible
+          v-else
+        />
 
       </section>
       
