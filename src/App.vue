@@ -1,12 +1,24 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, reactive } from 'vue'
+
   import c_presupuesto from './components/control_presupuesto.vue'
   import control_disponible from './components/control_disponible.vue'
+  import ventana_formulario from './components/ventana_formulario.vue'
   import iconoAddGasto from './assets/images/AddGasto.svg'
   import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
   const presupuestoGeneral = ref(0)
   const disponible = ref(0)
+
+  const ventana = reactive({
+    mostrar: false,
+    animar: false
+  })
+
+  const mostarVentana = () => {
+    ventana.mostrar = true
+    ventana.animar = true
+  }
 
 
   const definirPresupuestoGeneral = (cantidad) => {
@@ -43,8 +55,12 @@
           <img :src="iconoAddPresupuesto" alt="">
           <br>
           <br>
-          <img :src="iconoAddGasto" alt="">
+          <img :src="iconoAddGasto" alt="" @click="mostarVentana">
       </section>
+
+      <ventana_formulario 
+        v-if="ventana.mostrar === true"
+      />
 
     </main>
 
