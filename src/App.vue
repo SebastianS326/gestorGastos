@@ -2,6 +2,8 @@
   import { ref } from 'vue'
   import c_presupuesto from './components/control_presupuesto.vue'
   import control_disponible from './components/control_disponible.vue'
+  import iconoAddGasto from './assets/images/AddGasto.svg'
+  import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
   const presupuestoGeneral = ref(0)
   const disponible = ref(0)
@@ -35,6 +37,17 @@
       </section>
       
     </header>
+
+    <main v-if="presupuestoGeneral > 0">
+      <section class="AddGasto">
+          <img :src="iconoAddPresupuesto" alt="">
+          <br>
+          <br>
+          <img :src="iconoAddGasto" alt="">
+      </section>
+
+    </main>
+
   </div>
 </template>
 
@@ -104,6 +117,17 @@
 
   h2 {
     font-size: 3rem;
+  }
+
+  .AddGasto {
+    position: fixed;
+    bottom: 5rem;
+    right: 5rem;
+  }
+
+  .AddGasto img {
+    width: 5rem;
+    cursor: pointer;
   }
 
 </style>

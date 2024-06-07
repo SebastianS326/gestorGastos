@@ -1,6 +1,5 @@
 <script setup>
-    import { ref } from 'vue'
-    import { defineEmits } from 'vue'
+    import { ref, defineEmits } from 'vue'
     import global_error from './gobal_error.vue'
 
     const presupuesto = ref(0)
