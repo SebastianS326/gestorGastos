@@ -5,7 +5,7 @@
   import control_disponible from './components/control_disponible.vue'
   import ventana_formulario from './components/ventana_formulario.vue'
   import iconoAddGasto from './assets/images/AddGasto.svg'
-  
+
   import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
   const presupuestoGeneral = ref(0)
@@ -14,7 +14,7 @@
 
   const ventana = reactive({
     mostrar: false,
-    animar: false
+    animar: false 
   })
 
   const gasto = reactive({
