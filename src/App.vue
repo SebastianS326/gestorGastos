@@ -20,6 +20,11 @@
     ventana.animar = true
   }
 
+  const cerrarVentana = () => {
+    ventana.mostrar = false
+    ventana.animar = false
+  }
+
 
   const definirPresupuestoGeneral = (cantidad) => {
     presupuestoGeneral.value = cantidad
@@ -60,6 +65,7 @@
 
       <ventana_formulario 
         v-if="ventana.mostrar === true"
+        @cerrar-ventana="cerrarVentana"
       />
 
     </main>
