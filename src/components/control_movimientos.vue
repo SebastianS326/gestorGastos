@@ -17,7 +17,7 @@
                 <p> <span>Concepto: </span> {{ props.gasto.nombre }} </p>
                 <p> <span>Categoria: </span> {{ props.gasto.categoria }} </p>
                 <p> <span>Fecha: </span> {{ formatoFecha(props.gasto.fecha) }} </p>
-                <p> <span>Costo: </span> {{ formatoDinero(props.gasto.cantidad) }} </p>
+                <p> <span>Valor: </span> {{ formatoDinero(props.gasto.cantidad) }} </p>
             </div>
 
         </section>

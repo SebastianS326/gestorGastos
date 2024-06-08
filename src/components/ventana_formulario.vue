@@ -84,13 +84,13 @@ const aggGasto = () => {
                     <select id="categoria" :value="props.categoria"
                         @input="emit('update:categoria', $event.target.value)">
                         <option value="">*** Seleccione ***</option>
-                        <option value="ahorro">Ahorro</option>
-                        <option value="comida">Comida</option>
-                        <option value="casa">Gastos de Casa</option>
-                        <option value="ocio">Ocio</option>
-                        <option value="salud">Salud</option>
-                        <option value="suscripciones">Suscripciones</option>
-                        <option value="otros">Gastos Varios</option>
+                        <option value="Ahorro">Ahorro</option>
+                        <option value="Gasto de comida">Comida</option>
+                        <option value="Gasto de casa">Gastos de Casa</option>
+                        <option value="Gasto de ocio">Ocio</option>
+                        <option value="Gasto de salud">Salud</option>
+                        <option value="Gasto de suscripciones">Suscripciones</option>
+                        <option value="Otros gastos">Gastos Varios</option>
                     </select>
                 </div>
 

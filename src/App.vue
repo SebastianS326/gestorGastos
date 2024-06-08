@@ -15,13 +15,21 @@ const presupuestoGeneral = ref(0)
 const disponible = ref(0)
 const gastado = ref(0)
 const gastos = ref([])
-const ingresos = ref([])
+//const ingresos = ref([])
 
 
-watch(gastos, () => {
+/* watch(gastos, () => {
   const totalGastado = gastos.value.reduce((total, gasto) => gasto.cantidad + total, 0)
   gastado.value = totalGastado
+  
+}, { deep: true }); */
 
+watch(gastos, (newGastos) => {
+  const totalGastado = newGastos
+    .filter(gasto => gasto.categoria !== 'Ingreso') // Filtra los elementos con categoría 'Ingreso'
+    .reduce((total, gasto) => gasto.cantidad + total, 0);
+  
+  gastado.value = totalGastado;
 }, { deep: true });
 
 watch([gastado, presupuestoGeneral], () => {
@@ -108,9 +116,10 @@ const guardarGasto = () => {
 }
 
 const guardarAdd = () => {
-  ingresos.value.push({
+  gastos.value.push({
     ...presupAdd
   })
+  console.log(presupAdd)
   presupuestoGeneral.value = presupAdd.cantidad + presupuestoGeneral.value
   cerrarVentana(ventana2)
   limpiarFormularioAdd()
