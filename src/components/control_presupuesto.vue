@@ -62,6 +62,7 @@ const definirPresupuesto = () => {
     border: none;
     font-size: 2.2rem;
     text-align: center;
+    width: 100%;
 }
 
 .presupuesto input[type="submit"] {

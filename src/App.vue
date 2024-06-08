@@ -15,14 +15,6 @@ const presupuestoGeneral = ref(0)
 const disponible = ref(0)
 const gastado = ref(0)
 const gastos = ref([])
-//const ingresos = ref([])
-
-
-/* watch(gastos, () => {
-  const totalGastado = gastos.value.reduce((total, gasto) => gasto.cantidad + total, 0)
-  gastado.value = totalGastado
-  
-}, { deep: true }); */
 
 watch(gastos, (newGastos) => {
   const totalGastado = newGastos
@@ -35,7 +27,6 @@ watch(gastos, (newGastos) => {
 watch([gastado, presupuestoGeneral], () => {
   disponible.value = presupuestoGeneral.value - gastado.value
 })
-
 
 const ventana = reactive({
   mostrar: false,
