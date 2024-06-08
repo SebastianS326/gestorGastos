@@ -2,7 +2,6 @@
 import { defineProps, computed } from 'vue'
 import CircleProgress from 'vue3-circle-progress-bar'
 import 'vue3-circle-progress-bar/dist/circle-progress-bar.css'
-//import imagen from "../assets/images/grafico.png"
 import { formatoDinero } from '../Funtions'
 
 const props = defineProps({

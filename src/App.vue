@@ -5,8 +5,10 @@ import c_presupuesto from './components/control_presupuesto.vue'
 import control_disponible from './components/control_disponible.vue'
 import ventana_formulario from './components/ventana_formulario.vue'
 import ventana_formularioAddP from './components/ventana_formularioAddP.vue'
-import iconoAddGasto from './assets/images/AddGasto.svg'
+import control_movimientos from './components/control_movimientos.vue'
 
+
+import iconoAddGasto from './assets/images/AddGasto.svg'
 import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
 const presupuestoGeneral = ref(0)
@@ -129,7 +131,7 @@ const guardarAdd = () => {
 </script>
 
 <template>
-  <div>
+  <div :class="{fijar: ventana.mostrar}">
     <header>
       <h1>
         Planificador de Gastos <span>&#x1F4B5;</span>
@@ -146,7 +148,7 @@ const guardarAdd = () => {
 
     </header>
 
-    <main v-if="presupuestoGeneral > 0">
+    <main v-if="presupuestoGeneral > 0" >
       <section class="AddGasto">
         <p>
           <img :src="iconoAddPresupuesto" @click="mostarVentana(ventana2)"> Agregar Presupuesto
@@ -155,6 +157,16 @@ const guardarAdd = () => {
         <p>
           <img :src="iconoAddGasto" @click="mostarVentana(ventana)"> Agregar Gasto
         </p>
+
+      </section>
+
+      <section class="listado-gastos contenedor">
+        <h2>{{ gastos.length > 0 ? 'Movimientos' : 'No hay movimientos' }}</h2>
+        <control_movimientos
+          v-for="gasto in gastos"
+          :key="gasto.concepto"
+          :gasto="gasto"
+        />
 
       </section>
 
@@ -218,6 +230,11 @@ header {
   background-color: var(--GrisAzul-600);
 }
 
+.fijar {
+  overflow: hidden;
+  height: 100vh;
+}
+
 header h1 {
   padding: 3rem 0;
   margin: 0;
@@ -240,6 +257,7 @@ header h1 {
 .sombra {
   box-shadow: 0px 0px 100px 100px rgba(0, 0, 0, 0.1);
   background-color: var(--GrisAzul-50);
+  border-radius: 1rem;
 }
 
 h1 {
@@ -299,6 +317,15 @@ h2 {
   .icono {
     margin-right: 5px;
   }
+}
+
+.listado-gastos {
+  margin-top: 5rem;
+}
+
+.listado-gastos h2 {
+  font-weight: 900;
+  color: var(--GrisAzul-600);
 }
 
 
