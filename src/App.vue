@@ -77,7 +77,6 @@ const presupAdd = reactive({
   concepto: '',
   cantidad: '',
   categoria: 'Ingreso',
-  id: null,
   fecha: Date.now()
 })
 
@@ -87,7 +86,6 @@ const limpiarFormulario = () => {
     nombre: '',
     cantidad: '',
     categoria: '',
-    id: null,
     fecha: Date.now()
   })
 }
