@@ -132,7 +132,7 @@ const guardarAdd = () => {
   <div>
     <header>
       <h1>
-        Planificador de Gastos
+        Planificador de Gastos <span>&#x1F4B5;</span>
       </h1>
 
       <section class="contenedor-header contenedor sombra">
@@ -158,12 +158,23 @@ const guardarAdd = () => {
 
       </section>
 
-      <ventana_formulario v-if="ventana.mostrar === true" @cerrar-ventana="cerrarVentana(ventana)"
-        @guardar-gasto="guardarGasto" v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad"
-        v-model:categoria="gasto.categoria" v-model:disponible="presupuestoGeneral" />
+      <ventana_formulario 
+        v-if="ventana.mostrar === true" 
+        @cerrar-ventana="cerrarVentana(ventana)"
+        @guardar-gasto="guardarGasto" 
+        v-model:nombre="gasto.nombre" 
+        v-model:cantidad="gasto.cantidad"
+        v-model:categoria="gasto.categoria" 
+        v-model:disponible="presupuestoGeneral" 
+      />
 
-      <ventana_formularioAddP v-if="ventana2.mostrar === true" @cerrar-ventana="cerrarVentana(ventana2)"
-        @guardar-Add="guardarAdd" v-model:concepto="presupAdd.concepto" v-model:cantidad="presupAdd.cantidad" />
+      <ventana_formularioAddP 
+        v-if="ventana2.mostrar === true" 
+        @cerrar-ventana="cerrarVentana(ventana2)"
+        @guardar-Add="guardarAdd" 
+        v-model:concepto="presupAdd.concepto" 
+        v-model:cantidad="presupAdd.cantidad" 
+      />
 
     </main>
 
@@ -244,13 +255,22 @@ h2 {
   font-weight: 900;
   font-family: "lato", sans-serif;
   background-color: var(--GrisAzul-200);
+  border: none;
 
 }
 
 .AddGasto {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   bottom: 5rem;
   right: 5rem;
+}
+
+@media (min-width: 768px) {
+  .AddGasto {
+    flex-direction: row;
+  }
 }
 
 .AddGasto img {
