@@ -5,10 +5,10 @@ import global_error from './gobal_error.vue'
 import iconoCerrar from '../assets/images/closeRed.svg'
 
 const error = ref('')
-const emit = defineEmits(['cerrar-ventana', 'guardar-Add', 'update:concepto', 'update:cantidad'])
+const emit = defineEmits(['cerrar-ventana', 'guardar-Add', 'update:nombre', 'update:cantidad'])
 
 const props = defineProps({
-    concepto: {
+    nombre: {
         type: String,
         required: true
     },
@@ -20,8 +20,8 @@ const props = defineProps({
 })
 
 const aggPresupuesto = () => {
-    const { concepto, cantidad } = props
-    if ([concepto, cantidad].includes('')) {
+    const { nombre, cantidad } = props
+    if ([nombre, cantidad].includes('')) {
         error.value = "Todos los Campos son Obligatorios"
 
         setTimeout(() => {
@@ -56,9 +56,9 @@ const aggPresupuesto = () => {
                 <global_error v-if="error">{{ error }}</global_error>
 
                 <div class="Campo">
-                    <label for="concepto">Concepto: </label>
-                    <input id="concepto" type="text" placeholder="Agrega el concepto" :value="props.concepto"
-                        @input="emit('update:concepto', $event.target.value)">
+                    <label for="nombre">Concepto: </label>
+                    <input id="nombre" type="text" placeholder="Agrega el concepto" :value="props.nombre"
+                        @input="emit('update:nombre', $event.target.value)">
                 </div>
 
                 <div class="Campo">

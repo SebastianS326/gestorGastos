@@ -51,8 +51,6 @@ watch(ventana2, () => {
   }
 });
 
-
-
 const mostarVentana = (tipo) => {
   tipo.mostrar = true
   tipo.animar = true
@@ -64,7 +62,6 @@ const cerrarVentana = (tipo) => {
   tipo.animar = false
 }
 
-
 const gasto = reactive({
   nombre: '',
   cantidad: '',
@@ -73,12 +70,11 @@ const gasto = reactive({
 })
 
 const presupAdd = reactive({
-  concepto: '',
+  nombre: '',
   cantidad: '',
   categoria: 'Ingreso',
   fecha: Date.now()
 })
-
 
 const limpiarFormulario = () => {
   Object.assign(gasto, {
@@ -91,14 +87,12 @@ const limpiarFormulario = () => {
 
 const limpiarFormularioAdd = () => {
   Object.assign(presupAdd, {
-    concepto: '',
+    nombre: '',
     cantidad: '',
     categoria: 'Ingreso',
     fecha: Date.now()
   })
 }
-
-
 
 const definirPresupuestoGeneral = (cantidad) => {
   presupuestoGeneral.value = cantidad
@@ -178,7 +172,7 @@ const guardarAdd = () => {
         v-if="ventana2.mostrar === true" 
         @cerrar-ventana="cerrarVentana(ventana2)"
         @guardar-Add="guardarAdd" 
-        v-model:concepto="presupAdd.concepto" 
+        v-model:nombre="presupAdd.nombre" 
         v-model:cantidad="presupAdd.cantidad" 
       />
 
