@@ -250,31 +250,56 @@ h2 {
   font-size: 3rem;
 }
 
+.AddGasto {
+  text-align: center;
+  padding: 20px;
+}
+
 .AddGasto p {
+  margin: 20px 0;
+  position: relative;
   font-size: 2rem;
   font-weight: 900;
   font-family: "lato", sans-serif;
   background-color: var(--GrisAzul-200);
-  border: none;
-
-}
-
-.AddGasto {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  bottom: 5rem;
-  right: 5rem;
-}
-
-@media (min-width: 768px) {
-  .AddGasto {
-    flex-direction: row;
-  }
 }
 
 .AddGasto img {
+  display: inline-block;
+  vertical-align: middle;
   width: 3rem;
   cursor: pointer;
+  margin: 0 auto;
+  max-width: 100%; /* Para asegurarse de que las imágenes no excedan el ancho del contenedor */
 }
+
+.icono {
+  margin-right: 10px;
+  width: 40px; /* Ajusta según sea necesario */
+  height: auto;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .AddGasto {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .AddGasto p {
+    clear: both;
+    margin: 20px 0;
+  }
+
+  .AddGasto img {
+    width: 30px; /* Ajusta según sea necesario */
+    height: auto;
+  }
+
+  .icono {
+    margin-right: 5px;
+  }
+}
+
+
 </style>
