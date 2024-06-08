@@ -131,7 +131,7 @@ const guardarAdd = () => {
 </script>
 
 <template>
-  <div :class="{fijar: ventana.mostrar}">
+  <div  :class="{fijar2: ventana2.mostrar, fijar: ventana.mostrar}">
     <header>
       <h1>
         Planificador de Gastos <span>&#x1F4B5;</span>
@@ -231,6 +231,11 @@ header {
 }
 
 .fijar {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.fijar2 {
   overflow: hidden;
   height: 100vh;
 }
