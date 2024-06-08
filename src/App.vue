@@ -10,7 +10,6 @@ import iconoAddGasto from './assets/images/AddGasto.svg'
 import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
 const presupuestoGeneral = ref(0)
-//const presupuestoAdd = ref(0)
 const disponible = ref(0)
 const gastado = ref(0)
 const gastos = ref([])
