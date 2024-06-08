@@ -1,6 +1,8 @@
 <script setup>
-    import { defineProps } from 'vue'
-    import imagen from "../assets/images/grafico.png"
+    import { defineProps, computed } from 'vue'
+    import CircleProgress from 'vue3-circle-progress-bar'
+    import 'vue3-circle-progress-bar/dist/circle-progress-bar.css'
+    //import imagen from "../assets/images/grafico.png"
     import { formatoDinero } from '../Funtions'
 
     const props = defineProps({
@@ -18,13 +20,27 @@
         }
         
     })
+
+    const porcentaje = computed(() => {
+        return parseInt(((props.presupuestoGeneral - props.disponible) / props.presupuestoGeneral )*100)
+    })
+
 </script>
 
 <template>
     <section class="dos-columnas">
 
         <div class="contenedor-grafico">
-            <img :src="imagen">
+            <CircleProgress
+                :size="250"
+                :percent="porcentaje"
+                :border-width="20"
+                :border-bg-width="20"
+                :transition=300
+                fill-color="#3c3f50"
+                empty-color="#b2b6c7"
+                :show-percent="true"
+            />
         </div>
 
         <div class="contenedor-presupuesto">
