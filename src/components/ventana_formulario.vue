@@ -19,11 +19,16 @@ const props = defineProps({
     categoria: {
         type: String,
         required: true
+    },
+    disponible:
+    {
+        type: Number,
+        required: true
     }
 })
 
 const aggGasto = () => {
-    const { nombre, cantidad, categoria } = props
+    const { nombre, cantidad, categoria, disponible } = props
     if ([nombre, cantidad, categoria].includes('')) {
         error.value = "Todos los Campos son Obligatorios"
 
@@ -31,15 +36,19 @@ const aggGasto = () => {
             error.value = ''
         }, 3000)
     }
-
-    if (cantidad <= 0) {
+    else if (cantidad <= 0){
         error.value = "El gasto debe ser mayor a 0"
 
         setTimeout(() => {
             error.value = ''
         }, 3000)
     }
-    emit('guardar-gasto')
+    else if (cantidad > disponible) {
+        error.value = "El gasto no puede ser mayor al disponible"
+    }
+    else {
+        emit('guardar-gasto')
+    }
 }
 
 

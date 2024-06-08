@@ -2,6 +2,7 @@
     import { defineProps } from 'vue'
     import imagen from "../assets/images/grafico.png"
     import { formatoDinero } from '../Funtions'
+
     const props = defineProps({
         presupuestoGeneral: {
             type: Number,
@@ -15,7 +16,7 @@
             type: Number,
             required: true
         }
-
+        
     })
 </script>
 

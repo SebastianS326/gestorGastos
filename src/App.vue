@@ -4,11 +4,13 @@ import { ref, reactive, watch } from 'vue'
 import c_presupuesto from './components/control_presupuesto.vue'
 import control_disponible from './components/control_disponible.vue'
 import ventana_formulario from './components/ventana_formulario.vue'
+import ventana_formularioAddP from './components/ventana_formularioAddP.vue'
 import iconoAddGasto from './assets/images/AddGasto.svg'
 
 import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
 const presupuestoGeneral = ref(0)
+const presupuestoAdd = ref(0)
 const disponible = ref(0)
 const gastado = ref(0)
 const gastos = ref([])
@@ -17,10 +19,10 @@ const gastos = ref([])
 watch(gastos, () => {
   const totalGastado = gastos.value.reduce((total, gasto) => gasto.cantidad + total, 0)
   gastado.value = totalGastado
-  //disponible.value = presupuestoGeneral.value - totalGastado
+
 }, {deep: true});
 
-watch(gastado, () => {
+watch([gastado, presupuestoGeneral], () => {
   disponible.value = presupuestoGeneral.value - gastado.value
 })
 
@@ -28,6 +30,12 @@ const ventana = reactive({
   mostrar: false,
   animar: false
 })
+
+const ventana2 = reactive({
+  mostrar: false,
+  animar: false
+})
+
 
 const gasto = reactive({
   nombre: '',
@@ -37,14 +45,16 @@ const gasto = reactive({
   fecha: Date.now()
 })
 
-const mostarVentana = () => {
-  ventana.mostrar = true
-  ventana.animar = true
+
+const mostarVentana = (tipo) => {
+  tipo.mostrar = true
+  tipo.animar = true
 }
 
-const cerrarVentana = () => {
-  ventana.mostrar = false
-  ventana.animar = false
+
+const cerrarVentana = (tipo) => {
+  tipo.mostrar = false
+  tipo.animar = false
 }
 
 
@@ -59,7 +69,7 @@ const guardarGasto = () => {
     id: 123,
     ...gasto
   })
-  cerrarVentana()
+  cerrarVentana(ventana)
 
   Object.assign(gasto, {
     nombre: '',
@@ -70,13 +80,18 @@ const guardarGasto = () => {
   })
 }
 
+const guardarAdd = (nuevaCantidad) => {
+  presupuestoGeneral.value = nuevaCantidad + presupuestoGeneral.value
+  cerrarVentana(ventana2)
+}
+
 </script>
 
 <template>
   <div>
     <header>
       <h1>
-        Planificador de Gastos Sebastian
+        Planificador de Gastos
       </h1>
 
       <section class="contenedor-header contenedor sombra">
@@ -99,18 +114,32 @@ const guardarGasto = () => {
 
     <main v-if="presupuestoGeneral > 0">
       <section class="AddGasto">
-        <p> 
-          <img :src="iconoAddPresupuesto" alt=""> Agregar Presupuesto 
+        <p>
+          <img :src="iconoAddPresupuesto" @click="mostarVentana(ventana2)"> Agregar Presupuesto 
         </p>
         <br>
         <p>
-          <img :src="iconoAddGasto" alt="" @click="mostarVentana"> Agregar Gasto 
+          <img :src="iconoAddGasto" @click="mostarVentana(ventana)"> Agregar Gasto 
         </p>
         
       </section>
 
-      <ventana_formulario v-if="ventana.mostrar === true" @cerrar-ventana="cerrarVentana" @guardar-gasto="guardarGasto"
-        v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad" v-model:categoria="gasto.categoria" />
+      <ventana_formulario 
+        v-if="ventana.mostrar === true" 
+        @cerrar-ventana="cerrarVentana(ventana)" 
+        @guardar-gasto="guardarGasto"
+        v-model:nombre="gasto.nombre" 
+        v-model:cantidad="gasto.cantidad" 
+        v-model:categoria="gasto.categoria"
+        v-model:disponible="presupuestoGeneral" 
+      />
+
+      <ventana_formularioAddP
+      v-if="ventana2.mostrar === true"
+      @cerrar-ventana="cerrarVentana(ventana2)"
+      @guardar-Add="guardarAdd"
+      v-model:cantidad="presupuestoAdd"
+      />
 
     </main>
 
