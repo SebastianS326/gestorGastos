@@ -10,40 +10,46 @@ import iconoAddGasto from './assets/images/AddGasto.svg'
 import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
 const presupuestoGeneral = ref(0)
-const presupuestoAdd = ref(0)
+//const presupuestoAdd = ref(0)
 const disponible = ref(0)
 const gastado = ref(0)
 const gastos = ref([])
+const ingresos = ref([])
 
 
 watch(gastos, () => {
   const totalGastado = gastos.value.reduce((total, gasto) => gasto.cantidad + total, 0)
   gastado.value = totalGastado
 
-}, {deep: true});
+}, { deep: true });
 
 watch([gastado, presupuestoGeneral], () => {
   disponible.value = presupuestoGeneral.value - gastado.value
 })
+
 
 const ventana = reactive({
   mostrar: false,
   animar: false
 })
 
+watch(ventana, () => {
+  if (!ventana.mostrar) {
+    limpiarFormulario()
+  }
+});
+
 const ventana2 = reactive({
   mostrar: false,
   animar: false
 })
 
+watch(ventana2, () => {
+  if (!ventana2.mostrar) {
+    limpiarFormularioAdd()
+  }
+});
 
-const gasto = reactive({
-  nombre: '',
-  cantidad: '',
-  categoria: '',
-  id: null,
-  fecha: Date.now()
-})
 
 
 const mostarVentana = (tipo) => {
@@ -55,6 +61,44 @@ const mostarVentana = (tipo) => {
 const cerrarVentana = (tipo) => {
   tipo.mostrar = false
   tipo.animar = false
+}
+
+
+const gasto = reactive({
+  nombre: '',
+  cantidad: '',
+  categoria: '',
+  id: null,
+  fecha: Date.now()
+})
+
+const presupAdd = reactive({
+  concepto: '',
+  cantidad: '',
+  categoria: 'Ingreso',
+  id: null,
+  fecha: Date.now()
+})
+
+
+const limpiarFormulario = () => {
+  Object.assign(gasto, {
+    nombre: '',
+    cantidad: '',
+    categoria: '',
+    id: null,
+    fecha: Date.now()
+  })
+}
+
+const limpiarFormularioAdd = () => {
+  Object.assign(presupAdd, {
+    concepto: '',
+    cantidad: '',
+    categoria: 'Ingreso',
+    id: null,
+    fecha: Date.now()
+  })
 }
 
 
@@ -70,19 +114,17 @@ const guardarGasto = () => {
     ...gasto
   })
   cerrarVentana(ventana)
-
-  Object.assign(gasto, {
-    nombre: '',
-    cantidad: '',
-    categoria: '',
-    id: null,
-    fecha: Date.now()
-  })
+  limpiarFormulario()
 }
 
-const guardarAdd = (nuevaCantidad) => {
-  presupuestoGeneral.value = nuevaCantidad + presupuestoGeneral.value
+const guardarAdd = () => {
+  ingresos.value.push({
+    id: 123,
+    ...presupAdd
+  })
+  presupuestoGeneral.value = presupAdd.cantidad + presupuestoGeneral.value
   cerrarVentana(ventana2)
+  limpiarFormularioAdd()
 }
 
 </script>
@@ -96,17 +138,10 @@ const guardarAdd = (nuevaCantidad) => {
 
       <section class="contenedor-header contenedor sombra">
 
-        <c_presupuesto 
-          v-if="presupuestoGeneral === 0" 
-          @definir-presupuesto="definirPresupuestoGeneral" 
-        />
+        <c_presupuesto v-if="presupuestoGeneral === 0" @definir-presupuesto="definirPresupuestoGeneral" />
 
-        <control_disponible 
-          v-else 
-          :presupuestoGeneral="presupuestoGeneral" 
-          :disponible="disponible"
-          :gastado="gastado"
-        />
+        <control_disponible v-else :presupuestoGeneral="presupuestoGeneral" :disponible="disponible"
+          :gastado="gastado" />
 
       </section>
 
@@ -115,31 +150,21 @@ const guardarAdd = (nuevaCantidad) => {
     <main v-if="presupuestoGeneral > 0">
       <section class="AddGasto">
         <p>
-          <img :src="iconoAddPresupuesto" @click="mostarVentana(ventana2)"> Agregar Presupuesto 
+          <img :src="iconoAddPresupuesto" @click="mostarVentana(ventana2)"> Agregar Presupuesto
         </p>
         <br>
         <p>
-          <img :src="iconoAddGasto" @click="mostarVentana(ventana)"> Agregar Gasto 
+          <img :src="iconoAddGasto" @click="mostarVentana(ventana)"> Agregar Gasto
         </p>
-        
+
       </section>
 
-      <ventana_formulario 
-        v-if="ventana.mostrar === true" 
-        @cerrar-ventana="cerrarVentana(ventana)" 
-        @guardar-gasto="guardarGasto"
-        v-model:nombre="gasto.nombre" 
-        v-model:cantidad="gasto.cantidad" 
-        v-model:categoria="gasto.categoria"
-        v-model:disponible="presupuestoGeneral" 
-      />
+      <ventana_formulario v-if="ventana.mostrar === true" @cerrar-ventana="cerrarVentana(ventana)"
+        @guardar-gasto="guardarGasto" v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad"
+        v-model:categoria="gasto.categoria" v-model:disponible="presupuestoGeneral" />
 
-      <ventana_formularioAddP
-      v-if="ventana2.mostrar === true"
-      @cerrar-ventana="cerrarVentana(ventana2)"
-      @guardar-Add="guardarAdd"
-      v-model:cantidad="presupuestoAdd"
-      />
+      <ventana_formularioAddP v-if="ventana2.mostrar === true" @cerrar-ventana="cerrarVentana(ventana2)"
+        @guardar-Add="guardarAdd" v-model:concepto="presupAdd.concepto" v-model:cantidad="presupAdd.cantidad" />
 
     </main>
 

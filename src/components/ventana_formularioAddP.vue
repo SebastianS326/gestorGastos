@@ -5,30 +5,40 @@ import global_error from './gobal_error.vue'
 import iconoCerrar from '../assets/images/closeRed.svg'
 
 const error = ref('')
-const emit = defineEmits(['cerrar-ventana', 'guardar-Add', 'update:cantidad'])
+const emit = defineEmits(['cerrar-ventana', 'guardar-Add', 'update:concepto', 'update:cantidad'])
 
 const props = defineProps({
+    concepto: {
+        type: String,
+        required: true
+    },
     cantidad: {
         type: [String, Number],
         required: true
     }
+
 })
 
 const aggPresupuesto = () => {
-    if (props.cantidad <= 0) {
-        error.value = "El valor debe ser mayor a 0"
+    const { concepto, cantidad } = props
+    if ([concepto, cantidad].includes('')) {
+        error.value = "Todos los Campos son Obligatorios"
+
+        setTimeout(() => {
+            error.value = ''
+        }, 3000)
+    }
+    else if (cantidad <= 0) {
+        error.value = "El ingreso debe ser mayor a 0"
+
         setTimeout(() => {
             error.value = ''
         }, 3000)
     }
     else {
-        const nuevaCantidad = Number(props.cantidad)
-        emit('guardar-Add', nuevaCantidad)
+        emit('guardar-Add')
     }
 }
-
-
-
 
 </script>
 
@@ -44,6 +54,12 @@ const aggPresupuesto = () => {
                 <legend>Agregar Presupuesto</legend>
 
                 <global_error v-if="error">{{ error }}</global_error>
+
+                <div class="Campo">
+                    <label for="concepto">Concepto: </label>
+                    <input id="concepto" type="text" placeholder="Agrega el concepto" :value="props.concepto"
+                        @input="emit('update:concepto', $event.target.value)">
+                </div>
 
                 <div class="Campo">
                     <label for="cantidad">Monto a Adicionar: </label>
