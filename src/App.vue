@@ -69,7 +69,6 @@ const gasto = reactive({
   nombre: '',
   cantidad: '',
   categoria: '',
-  id: null,
   fecha: Date.now()
 })
 
@@ -95,7 +94,6 @@ const limpiarFormularioAdd = () => {
     concepto: '',
     cantidad: '',
     categoria: 'Ingreso',
-    id: null,
     fecha: Date.now()
   })
 }
@@ -109,7 +107,6 @@ const definirPresupuestoGeneral = (cantidad) => {
 
 const guardarGasto = () => {
   gastos.value.push({
-    id: 123,
     ...gasto
   })
   cerrarVentana(ventana)
@@ -118,7 +115,6 @@ const guardarGasto = () => {
 
 const guardarAdd = () => {
   ingresos.value.push({
-    id: 123,
     ...presupAdd
   })
   presupuestoGeneral.value = presupAdd.cantidad + presupuestoGeneral.value
