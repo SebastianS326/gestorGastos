@@ -44,7 +44,7 @@
         </div>
 
         <div class="contenedor-presupuesto">
-            <button class="ResetApp"> Resetear App </button>
+            
             <p> 
                 <span>Presupuesto: </span>
                 {{ formatoDinero(props.presupuestoGeneral) }}
@@ -59,6 +59,8 @@
                 <span>Gastado: </span>
                 {{ formatoDinero(props.gastado) }}
             </p>
+
+            <button class="ResetApp"> Resetear App </button>
         </div>
 
     </section>
