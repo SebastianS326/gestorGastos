@@ -99,10 +99,14 @@ const guardarGasto = () => {
 
     <main v-if="presupuestoGeneral > 0">
       <section class="AddGasto">
-        <img :src="iconoAddPresupuesto" alt="">
+        <p> 
+          <img :src="iconoAddPresupuesto" alt=""> Agregar Presupuesto 
+        </p>
         <br>
-        <br>
-        <img :src="iconoAddGasto" alt="" @click="mostarVentana">
+        <p>
+          <img :src="iconoAddGasto" alt="" @click="mostarVentana"> Agregar Gasto 
+        </p>
+        
       </section>
 
       <ventana_formulario v-if="ventana.mostrar === true" @cerrar-ventana="cerrarVentana" @guardar-gasto="guardarGasto"
@@ -182,6 +186,14 @@ h2 {
   font-size: 3rem;
 }
 
+.AddGasto p {
+  font-size: 2rem;
+  font-weight: 900;
+  font-family: "lato", sans-serif;
+  background-color: var(--GrisAzul-200);
+
+}
+
 .AddGasto {
   position: fixed;
   bottom: 5rem;
@@ -189,7 +201,7 @@ h2 {
 }
 
 .AddGasto img {
-  width: 5rem;
+  width: 3rem;
   cursor: pointer;
 }
 </style>
