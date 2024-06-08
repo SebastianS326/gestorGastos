@@ -1,12 +1,17 @@
 <script setup>
     import { defineProps } from 'vue'
     import imagen from "../assets/images/grafico.png"
+    import { formatoDinero } from '../Funtions'
     const props = defineProps({
         presupuestoGeneral: {
             type: Number,
             required: true
         },
         disponible: {
+            type: Number,
+            required: true
+        },
+        gastado: {
             type: Number,
             required: true
         }
@@ -25,17 +30,17 @@
             <button class="ResetApp"> Resetear App </button>
             <p> 
                 <span>Presupuesto: </span>
-                $ {{ props.presupuestoGeneral }}
+                {{ formatoDinero(props.presupuestoGeneral) }}
             </p>
 
             <p> 
                 <span>Disponible: </span> 
-                $ {{ props.disponible }}
+                {{ formatoDinero(props.disponible) }}
             </p>
 
             <p> 
                 <span>Gastado: </span>
-                $0
+                {{ formatoDinero(props.gastado) }}
             </p>
         </div>
 
