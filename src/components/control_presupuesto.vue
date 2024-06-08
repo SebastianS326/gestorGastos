@@ -1,23 +1,23 @@
 <script setup>
-    import { ref, defineEmits } from 'vue'
-    import global_error from './gobal_error.vue'
+import { ref, defineEmits } from 'vue'
+import global_error from './gobal_error.vue'
 
-    const presupuesto = ref(0)
-    const error = ref('')
+const presupuesto = ref(0)
+const error = ref('')
 
-    const emit = defineEmits(['definir-presupuesto'])
+const emit = defineEmits(['definir-presupuesto'])
 
-    const definirPresupuesto = () => {
-        if (presupuesto.value <= 0) {
-            error.value = 'El presupuesto debe ser mayor a 0'
+const definirPresupuesto = () => {
+    if (presupuesto.value <= 0) {
+        error.value = 'El presupuesto debe ser mayor a 0'
 
-            setTimeout(() => {
-                error.value = ''
-            }, 3000)
-        }
-
-        emit('definir-presupuesto', presupuesto.value)
+        setTimeout(() => {
+            error.value = ''
+        }, 3000)
     }
+
+    emit('definir-presupuesto', presupuesto.value)
+}
 
 </script>
 
@@ -33,17 +33,12 @@
 
             <label for="">Definir Presupuesto</label>
 
-            <input id="nuevo-presupuesto" 
-                class="nuevo-presupuesto"  
-                type="number"
-                min="0" 
-                placeholder="Agrega tu Presupuesto"
-                v-model.number="presupuesto"
-            />
+            <input id="nuevo-presupuesto" class="nuevo-presupuesto" type="number" min="0"
+                placeholder="Agrega tu Presupuesto" v-model.number="presupuesto" />
 
         </section>
 
-        
+
         <input type="submit" value="Definir Presupuesto">
 
     </form>
@@ -51,44 +46,45 @@
 
 
 <style scoped>
-    .presupuesto {
-        width: 100%;
-        color: var(--GrisAzul-600);
-    }
-    
-    .presupuesto label {
-        font-size: 2.8rem;
-    }
-    .presupuesto input[type="number"] {
-        background-color: var(--GrisAzul-100);
-        border-radius: 1rem ;
-        padding: 1.5rem;
-        border: none;
-        font-size: 2.2rem;
-        text-align: center;
-    }
+.presupuesto {
+    width: 100%;
+    color: var(--GrisAzul-600);
+}
 
-    .presupuesto input[type="submit"] {
-        background-color: var(--GrisAzul-600);
-        color: var(--GrisAzul-50);
-        border-radius: 1rem ;
-        padding: 1rem;
-        border: none;
-        font-size: 2rem;
-        margin-top: 2rem;
-        text-align: center;
-        font-weight: 900;
-        width: 100%;
-        transition: background-color 300ms ease;
-    }
+.presupuesto label {
+    font-size: 2.8rem;
+}
 
-    .presupuesto input[type="submit"]:hover {
-        background-color: var(--GrisAzul-400);
-        cursor: pointer;
-    }
+.presupuesto input[type="number"] {
+    background-color: var(--GrisAzul-100);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: none;
+    font-size: 2.2rem;
+    text-align: center;
+}
 
-    .campo {
-        display: grid;
-        gap: 2rem;
-    }
+.presupuesto input[type="submit"] {
+    background-color: var(--GrisAzul-600);
+    color: var(--GrisAzul-50);
+    border-radius: 1rem;
+    padding: 1rem;
+    border: none;
+    font-size: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-weight: 900;
+    width: 100%;
+    transition: background-color 300ms ease;
+}
+
+.presupuesto input[type="submit"]:hover {
+    background-color: var(--GrisAzul-400);
+    cursor: pointer;
+}
+
+.campo {
+    display: grid;
+    gap: 2rem;
+}
 </style>

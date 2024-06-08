@@ -36,7 +36,7 @@ const aggGasto = () => {
             error.value = ''
         }, 3000)
     }
-    else if (cantidad <= 0){
+    else if (cantidad <= 0) {
         error.value = "El gasto debe ser mayor a 0"
 
         setTimeout(() => {

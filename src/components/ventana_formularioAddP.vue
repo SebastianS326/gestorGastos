@@ -47,8 +47,8 @@ const aggPresupuesto = () => {
 
                 <div class="Campo">
                     <label for="cantidad">Monto a Adicionar: </label>
-                    <input id="cantidadGasto" type="number" placeholder="Agrega el monto"
-                        :value="props.cantidad" @input="emit('update:cantidad', +$event.target.value)">
+                    <input id="cantidadGasto" type="number" placeholder="Agrega el monto" :value="props.cantidad"
+                        @input="emit('update:cantidad', +$event.target.value)">
                 </div>
 
                 <input type="submit" value="Agregar">
