@@ -30,7 +30,7 @@ const porcentaje = computed(() => {
     <section class="dos-columnas">
 
         <div class="contenedor-grafico">
-            <CircleProgress :size="250" :percent="porcentaje" :border-width="20" :border-bg-width="20" :transition=300
+            <CircleProgress :size="200" :percent="porcentaje" :border-width="20" :border-bg-width="20" :transition=300
                 fill-color="#3c3f50" empty-color="#b2b6c7" :show-percent="true" />
         </div>
 
@@ -98,6 +98,10 @@ const porcentaje = computed(() => {
 .contenedor-presupuesto {
     width: 100%;
 
+}
+
+.contenedor-grafico {
+    width: 100%;
 }
 
 .contenedor-presupuesto p {
