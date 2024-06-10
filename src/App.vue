@@ -22,7 +22,7 @@ const gastado = ref(0)
 const gastos = ref([])
 
 /**
- * Estructuras reactivas que representan un nuevo gasto y un nuevo ingreso
+ * Estructuras reactivas que representan un estado de un  modal (ventana emergente (formularios))
  */
 const ventana = reactive({
   mostrar: false
@@ -32,7 +32,9 @@ const ventana2 = reactive({
   mostrar: false
 })
 
-
+/**
+ * Estructuras reactivas que representan un nuevo gasto y un nuevo ingreso.
+ */
 const gasto = reactive({
   nombre: '',
   cantidad: '',
@@ -67,6 +69,9 @@ watch([gastado, presupuestoGeneral], () => {
   disponible.value = presupuestoGeneral.value - gastado.value
 })
 
+/**
+ * Observa las propiedades de los objetos ventana, ventana2. actua cada vez que se cierran.
+ */
 watch(ventana, () => {
   if (!ventana.mostrar) {
     limpiarFormulario()
@@ -134,7 +139,6 @@ const guardarAdd = () => {
   gastos.value.push({
     ...presupAdd
   })
-  console.log(presupAdd)
   presupuestoGeneral.value = presupAdd.cantidad + presupuestoGeneral.value
   cerrarVentana(ventana2)
   limpiarFormularioAdd()
@@ -143,19 +147,31 @@ const guardarAdd = () => {
 </script>
 
 <template>
+
   <div :class="{ fijar2: ventana2.mostrar, fijar: ventana.mostrar }">
+
     <header>
+
       <h1>
         Planificador de Gastos <span>&#x1F4B5;</span>
       </h1>
 
       <section class="contenedor-header contenedor sombra">
+
         <!-- Muestra el componente de presupuesto si el presupuesto general es 0 -->
-        <c_presupuesto v-if="presupuestoGeneral === 0" @definir-presupuesto="definirPresupuestoGeneral" />
+        <c_presupuesto 
+          v-if="presupuestoGeneral === 0" 
+          @definir-presupuesto="definirPresupuestoGeneral" 
+        />
         <!-- Muestra el componente de control disponible si el presupuesto general es mayor que 0 -->
-        <control_disponible v-else :presupuestoGeneral="presupuestoGeneral" :disponible="disponible"
-          :gastado="gastado" />
+        <control_disponible 
+          v-else :presupuestoGeneral="presupuestoGeneral" 
+          :disponible="disponible"
+          :gastado="gastado" 
+        />
+
       </section>
+      
     </header>
 
     <main v-if="presupuestoGeneral > 0">
@@ -170,21 +186,39 @@ const guardarAdd = () => {
       </section>
 
       <!-- Ventana emergente para agregar nuevos gastos -->
-      <ventana_formulario v-if="ventana.mostrar === true" @cerrar-ventana="cerrarVentana(ventana)"
-        @guardar-gasto="guardarGasto" v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad"
-        v-model:categoria="gasto.categoria" v-model:disponible="disponible" />
+      <ventana_formulario 
+        v-if="ventana.mostrar === true" 
+        @cerrar-ventana="cerrarVentana(ventana)"
+        @guardar-gasto="guardarGasto" 
+        v-model:nombre="gasto.nombre" 
+        v-model:cantidad="gasto.cantidad"
+        v-model:categoria="gasto.categoria" 
+        v-model:disponible="disponible" 
+      />
 
       <!-- Ventana emergente para agregar nuevos ingresos -->
-      <ventana_formularioAddP v-if="ventana2.mostrar === true" @cerrar-ventana="cerrarVentana(ventana2)"
-        @guardar-Add="guardarAdd" v-model:nombre="presupAdd.nombre" v-model:cantidad="presupAdd.cantidad" />
+      <ventana_formularioAddP 
+        v-if="ventana2.mostrar === true" 
+        @cerrar-ventana="cerrarVentana(ventana2)"
+        @guardar-Add="guardarAdd" 
+        v-model:nombre="presupAdd.nombre" 
+        v-model:cantidad="presupAdd.cantidad" 
+      />
 
       <section class="listado-gastos contenedor">
         <h2>{{ gastos.length > 0 ? 'Movimientos' : 'No hay movimientos' }}</h2>
         <!-- Muestra cada movimiento (gasto o ingreso) en la lista de movimientos -->
-        <control_movimientos v-for="gasto in gastos" :key="gasto.concepto" :gasto="gasto" />
+        <control_movimientos 
+          v-for="gasto in gastos" 
+          :key="gasto.concepto" 
+          :gasto="gasto" 
+        />
       </section>
+
     </main>
+
   </div>
+
 </template>
 
 <style>
