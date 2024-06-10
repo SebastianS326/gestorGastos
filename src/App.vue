@@ -1,3 +1,5 @@
+<!-- App.vue -->
+
 <script setup>
 import { ref, reactive, watch } from 'vue'
 
@@ -7,55 +9,29 @@ import ventana_formulario from './components/ventana_formulario.vue'
 import ventana_formularioAddP from './components/ventana_formularioAddP.vue'
 import control_movimientos from './components/control_movimientos.vue'
 
-
 import iconoAddGasto from './assets/images/AddGasto.svg'
 import iconoAddPresupuesto from './assets/images/AddPresupuesto.svg'
 
+/**
+ * Variables reactivas que representan el estado del presupuesto general,
+ * el dinero disponible, el dinero gastado y una lista de gastos.
+ */
 const presupuestoGeneral = ref(0)
 const disponible = ref(0)
 const gastado = ref(0)
 const gastos = ref([])
 
-watch(gastos, (newGastos) => {
-  const totalGastado = newGastos
-    .filter(gasto => gasto.categoria !== 'Ingreso') // Filtra los elementos con categoría 'Ingreso'
-    .reduce((total, gasto) => gasto.cantidad + total, 0);
-  
-  gastado.value = totalGastado;
-}, { deep: true });
-
-watch([gastado, presupuestoGeneral], () => {
-  disponible.value = presupuestoGeneral.value - gastado.value
-})
-
+/**
+ * Estructuras reactivas que representan un nuevo gasto y un nuevo ingreso
+ */
 const ventana = reactive({
   mostrar: false
 })
-
-watch(ventana, () => {
-  if (!ventana.mostrar) {
-    limpiarFormulario()
-  }
-});
 
 const ventana2 = reactive({
   mostrar: false
 })
 
-watch(ventana2, () => {
-  if (!ventana2.mostrar) {
-    limpiarFormularioAdd()
-  }
-});
-
-const mostarVentana = (tipo) => {
-  tipo.mostrar = true
-}
-
-
-const cerrarVentana = (tipo) => {
-  tipo.mostrar = false
-}
 
 const gasto = reactive({
   nombre: '',
@@ -71,6 +47,52 @@ const presupAdd = reactive({
   fecha: Date.now()
 })
 
+
+/**
+ * Observa la lista de gastos y calcula el total gastado cada vez que cambia la lista,
+ * excluyendo los ingresos.
+ */
+watch(gastos, (newGastos) => {
+  const totalGastado = newGastos
+    .filter(gasto => gasto.categoria !== 'Ingreso') // Filtra los elementos con categoría 'Ingreso'
+    .reduce((total, gasto) => gasto.cantidad + total, 0);
+
+  gastado.value = totalGastado;
+}, { deep: true });
+
+/**
+ * Actualiza el dinero disponible cada vez que cambian los valores de 'gastado' o 'presupuestoGeneral'.
+ */
+watch([gastado, presupuestoGeneral], () => {
+  disponible.value = presupuestoGeneral.value - gastado.value
+})
+
+watch(ventana, () => {
+  if (!ventana.mostrar) {
+    limpiarFormulario()
+  }
+});
+
+watch(ventana2, () => {
+  if (!ventana2.mostrar) {
+    limpiarFormularioAdd()
+  }
+});
+
+/**
+ * Funciones para mostrar y cerrar las ventanas emergentes.
+ */
+const mostarVentana = (tipo) => {
+  tipo.mostrar = true
+}
+
+const cerrarVentana = (tipo) => {
+  tipo.mostrar = false
+}
+
+/**
+ * Funciones para limpiar los formularios de gastos y de presupuestos.
+ */
 const limpiarFormulario = () => {
   Object.assign(gasto, {
     nombre: '',
@@ -89,11 +111,17 @@ const limpiarFormularioAdd = () => {
   })
 }
 
+/**
+ * Función para definir el presupuesto general y el disponible inicial.
+ */
 const definirPresupuestoGeneral = (cantidad) => {
   presupuestoGeneral.value = cantidad
   disponible.value = cantidad
 }
 
+/**
+ * Funciones para guardar nuevos gastos e ingresos en la lista de gastos.
+ */
 const guardarGasto = () => {
   gastos.value.push({
     ...gasto
@@ -115,24 +143,22 @@ const guardarAdd = () => {
 </script>
 
 <template>
-  <div  :class="{fijar2: ventana2.mostrar, fijar: ventana.mostrar}">
+  <div :class="{ fijar2: ventana2.mostrar, fijar: ventana.mostrar }">
     <header>
       <h1>
         Planificador de Gastos <span>&#x1F4B5;</span>
       </h1>
 
       <section class="contenedor-header contenedor sombra">
-
+        <!-- Muestra el componente de presupuesto si el presupuesto general es 0 -->
         <c_presupuesto v-if="presupuestoGeneral === 0" @definir-presupuesto="definirPresupuestoGeneral" />
-
+        <!-- Muestra el componente de control disponible si el presupuesto general es mayor que 0 -->
         <control_disponible v-else :presupuestoGeneral="presupuestoGeneral" :disponible="disponible"
           :gastado="gastado" />
-
       </section>
-
     </header>
 
-    <main v-if="presupuestoGeneral > 0" >
+    <main v-if="presupuestoGeneral > 0">
       <section class="AddGasto">
         <p>
           <img :src="iconoAddPresupuesto" @click="mostarVentana(ventana2)"> Agregar Presupuesto
@@ -141,44 +167,28 @@ const guardarAdd = () => {
         <p>
           <img :src="iconoAddGasto" @click="mostarVentana(ventana)"> Agregar Gasto
         </p>
-
       </section>
 
-      <ventana_formulario 
-        v-if="ventana.mostrar === true" 
-        @cerrar-ventana="cerrarVentana(ventana)"
-        @guardar-gasto="guardarGasto" 
-        v-model:nombre="gasto.nombre" 
-        v-model:cantidad="gasto.cantidad"
-        v-model:categoria="gasto.categoria" 
-        v-model:disponible="presupuestoGeneral" 
-      />
+      <!-- Ventana emergente para agregar nuevos gastos -->
+      <ventana_formulario v-if="ventana.mostrar === true" @cerrar-ventana="cerrarVentana(ventana)"
+        @guardar-gasto="guardarGasto" v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad"
+        v-model:categoria="gasto.categoria" v-model:disponible="disponible" />
 
-      <ventana_formularioAddP 
-        v-if="ventana2.mostrar === true" 
-        @cerrar-ventana="cerrarVentana(ventana2)"
-        @guardar-Add="guardarAdd" 
-        v-model:nombre="presupAdd.nombre" 
-        v-model:cantidad="presupAdd.cantidad" 
-      />
+      <!-- Ventana emergente para agregar nuevos ingresos -->
+      <ventana_formularioAddP v-if="ventana2.mostrar === true" @cerrar-ventana="cerrarVentana(ventana2)"
+        @guardar-Add="guardarAdd" v-model:nombre="presupAdd.nombre" v-model:cantidad="presupAdd.cantidad" />
 
       <section class="listado-gastos contenedor">
         <h2>{{ gastos.length > 0 ? 'Movimientos' : 'No hay movimientos' }}</h2>
-        <control_movimientos
-          v-for="gasto in gastos"
-          :key="gasto.concepto"
-          :gasto="gasto"
-        />
-
+        <!-- Muestra cada movimiento (gasto o ingreso) en la lista de movimientos -->
+        <control_movimientos v-for="gasto in gastos" :key="gasto.concepto" :gasto="gasto" />
       </section>
-
     </main>
-
   </div>
 </template>
 
 <style>
-/*Estilos Globales de la App*/
+/* Variables globales de colores */
 :root {
   --GrisAzul-50: #f6f7f9;
   --GrisAzul-100: #ededf1;
@@ -193,6 +203,7 @@ const guardarAdd = () => {
   --GrisAzul-950: #23252e;
 }
 
+/* Configuración base de fuentes y tamaño */
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -210,20 +221,19 @@ body {
   background-color: var(--GrisAzul-200);
 }
 
+/* Estilo del header */
 header {
   background-color: var(--GrisAzul-600);
 }
 
-.fijar {
-  overflow: hidden;
-  height: 100vh;
-}
-
+/* Clases para fijar el contenido y evitar el scroll */
+.fijar,
 .fijar2 {
   overflow: hidden;
   height: 100vh;
 }
 
+/* Estilo del título principal */
 header h1 {
   padding: 3rem 0;
   margin: 0;
@@ -231,18 +241,21 @@ header h1 {
   text-align: center;
 }
 
+/* Contenedor centralizado */
 .contenedor {
   width: 90%;
   max-width: 80rem;
   margin: 0 auto;
 }
 
+/* Contenedor del header con sombra */
 .contenedor-header {
   margin-top: -5rem;
   transform: translateY(5rem);
   padding: 5rem;
 }
 
+/* Estilo de sombra para el contenedor */
 .sombra {
   box-shadow: 0px 0px 100px 100px rgba(0, 0, 0, 0.1);
   background-color: var(--GrisAzul-50);
@@ -257,6 +270,7 @@ h2 {
   font-size: 3rem;
 }
 
+/* Estilo de la sección para agregar gastos y presupuestos */
 .AddGasto {
   text-align: center;
   padding: 20px;
@@ -271,18 +285,20 @@ h2 {
   background-color: var(--GrisAzul-200);
 }
 
+/* Estilo de las imágenes dentro de AddGasto */
 .AddGasto img {
   display: inline-block;
   vertical-align: middle;
   width: 3rem;
   cursor: pointer;
   margin: 0 auto;
-  max-width: 100%; /* Para asegurarse de que las imágenes no excedan el ancho del contenedor */
+  max-width: 100%;
 }
 
+/* Estilo del icono */
 .icono {
   margin-right: 10px;
-  width: 40px; /* Ajusta según sea necesario */
+  width: 40px;
   height: auto;
 }
 
@@ -299,7 +315,7 @@ h2 {
   }
 
   .AddGasto img {
-    width: 30px; /* Ajusta según sea necesario */
+    width: 30px;
     height: auto;
   }
 
@@ -308,6 +324,7 @@ h2 {
   }
 }
 
+/* Estilo de la sección de listado de gastos */
 .listado-gastos {
   margin-top: 5rem;
 }
@@ -316,6 +333,4 @@ h2 {
   font-weight: 900;
   color: var(--GrisAzul-600);
 }
-
-
 </style>
