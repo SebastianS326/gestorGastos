@@ -29,8 +29,7 @@ watch([gastado, presupuestoGeneral], () => {
 })
 
 const ventana = reactive({
-  mostrar: false,
-  animar: false
+  mostrar: false
 })
 
 watch(ventana, () => {
@@ -40,8 +39,7 @@ watch(ventana, () => {
 });
 
 const ventana2 = reactive({
-  mostrar: false,
-  animar: false
+  mostrar: false
 })
 
 watch(ventana2, () => {
@@ -52,13 +50,11 @@ watch(ventana2, () => {
 
 const mostarVentana = (tipo) => {
   tipo.mostrar = true
-  tipo.animar = true
 }
 
 
 const cerrarVentana = (tipo) => {
   tipo.mostrar = false
-  tipo.animar = false
 }
 
 const gasto = reactive({
@@ -148,16 +144,6 @@ const guardarAdd = () => {
 
       </section>
 
-      <section class="listado-gastos contenedor">
-        <h2>{{ gastos.length > 0 ? 'Movimientos' : 'No hay movimientos' }}</h2>
-        <control_movimientos
-          v-for="gasto in gastos"
-          :key="gasto.concepto"
-          :gasto="gasto"
-        />
-
-      </section>
-
       <ventana_formulario 
         v-if="ventana.mostrar === true" 
         @cerrar-ventana="cerrarVentana(ventana)"
@@ -175,6 +161,16 @@ const guardarAdd = () => {
         v-model:nombre="presupAdd.nombre" 
         v-model:cantidad="presupAdd.cantidad" 
       />
+
+      <section class="listado-gastos contenedor">
+        <h2>{{ gastos.length > 0 ? 'Movimientos' : 'No hay movimientos' }}</h2>
+        <control_movimientos
+          v-for="gasto in gastos"
+          :key="gasto.concepto"
+          :gasto="gasto"
+        />
+
+      </section>
 
     </main>
 
