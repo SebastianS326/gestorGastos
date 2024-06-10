@@ -1,11 +1,12 @@
 <!-- control_disponible.vue -->
 
 <script setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, defineEmits } from 'vue'
 import CircleProgress from 'vue3-circle-progress-bar'
 import 'vue3-circle-progress-bar/dist/circle-progress-bar.css'
 import { formatoDinero } from '../Funtions'
 
+const emit = defineEmits(['reset-App'])
 // Definición de propiedades
 // Estas propiedades permiten al componente recibir datos del componente padre.
 const props = defineProps({
@@ -59,7 +60,7 @@ const porcentaje = computed(() => {
                 {{ formatoDinero(props.gastado) }}
             </p>
             <!-- Botón para resetear la aplicación -->
-            <button class="ResetApp"> Resetear App </button>
+            <button class="ResetApp" type="button" @click="emit('reset-App')"> Resetear App </button> 
         </div>
     </section>
 </template>

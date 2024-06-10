@@ -144,6 +144,11 @@ const guardarAdd = () => {
   limpiarFormularioAdd()
 }
 
+const resetApp = () => {
+  gastos.value = []
+  presupuestoGeneral.value = 0
+}
+
 </script>
 
 <template>
@@ -167,8 +172,9 @@ const guardarAdd = () => {
         <control_disponible 
           v-else :presupuestoGeneral="presupuestoGeneral" 
           :disponible="disponible"
-          :gastado="gastado" 
-        />
+          :gastado="gastado"
+          @reset-App="resetApp" 
+        /> <!-- Escuchar la emicion de un evento = @ || Pasar informacion : -->
 
       </section>
       
